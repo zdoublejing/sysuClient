@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+    <constant name="struts.enable.DynamicMethodInvocation" value="false" />
+    <constant name="struts.devMode" value="false" />
+    <constant name="struts.ui.theme" value="simple" />
+    
+    <package name="default" namespace="/" extends="struts-default">
+
+        <action name="signin" class="action.UserAction" method="signin">
+            <result name="admin" type="redirectAction">participant/all.action</result>
+            <result name="user" type="redirectAction">user/offered.action</result>
+        </action>
+        
+        <!-- Add actions here -->
+
+    </package>
+    
+    <package name="user" namespace="/user" extends="struts-default">
+    	<action name="offered" class="action.UserAction" method="offered">
+    		<result name="success">/user/offered.jsp</result>
+    	</action>
+    	<action name="allocated" class="action.UserAction" method="allocated">
+    		<result name="success">/user/allocated.jsp</result>
+    	</action>
+    	<action name="started" class="action.UserAction" method="started">
+    		<result name="success">/user/started.jsp</result>
+    	</action>
+    	<action name="suspended" class="action.UserAction" method="suspended">
+    		<result name="success">/user/suspended.jsp</result>
+    	</action>
+    </package>
+    
+    <package name="participant" namespace="/participant" extends="struts-default">
+
+        <action name="all" class="action.ParticipantAction" method="all">
+            <result name="success">/participant/all.jsp</result>
+        </action>
+        
+       	<action name="create" class="action.ParticipantAction" method="create">
+            <result name="success">/participant/create.jsp</result>
+        </action>
+        
+        <action name="info" class="action.ParticipantAction" method="info">
+            <result name="success">/participant/info.jsp</result>
+        </action>
+        
+    </package>
+
+</struts>
