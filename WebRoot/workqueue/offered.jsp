@@ -49,48 +49,58 @@
     </div>
 
     <div class="container-fluid">
-      <div class="row-fluid">
-        <div class="span3">
-          <div class="well sidebar-nav">
-            <ul class="nav nav-list">
-            	<li class="nav-header">个人工作列表</li>
-              	<li><a href="offered.action">Offered</a></li>
-              	<li class="active"><a href="allocated.action">Allocated</a></li>
-                <li><a href="started.action">Started</a></li>
-                <li><a href="suspended.action">Suspended</a></li>
-            </ul>
-          </div><!--/.well -->
-        </div>
+    	<div class="row-fluid">
+	        <div class="span3">
+	        	<div class="well sidebar-nav">
+	            <ul class="nav nav-list">
+	            	<li class="nav-header">个人工作列表</li>
+	              	<li class="active"><a href="offered.action">Offered</a></li>
+	              	<li><a href="allocated.action">Allocated</a></li>
+	                <li><a href="started.action">Started</a></li>
+	                <li><a href="suspended.action">Suspended</a></li>
+	            </ul>
+	            </div><!--/.well -->
+	        </div>
         
-        <div class="span9">
-        	<h3>Offered Work Items</h3>
-       		<div style="height:350px;"><table class="table table-hover">
-        		<thead>
-					<tr>
-					<th>Task ID</th>
-					<th>Task Name</th>
-					<th>Case ID</th>
-					<th>Status</th>
-					<th>Created</th>
-					</tr></thead>
-				<tbody>
-					<s:iterator id="workitem" value="%{items}">
-					<tr>
-					<td><s:property value="#workitem.getTaskID()"/></td>
-					<td><s:property value="#workitem.getTaskName()"/></td>
-					<td><s:property value="#workitem.getCaseID()"/></td>
-					<td><s:property value="#workitem.getStatus()"/></td>
-					<td><s:property value="#workitem.getEnablementTime()"/></td>
-					</tr>
-					</s:iterator></tbody></table>
-			</div>
-        </div>
+	        <div class="span9">
+	        <form name="offeredForm" action="" method="post"><fieldset><legend>Offered Work Items</legend>
+	        	<div style="height:350px;"><table class="table table-hover">
+	        		<thead>
+						<tr>
+						<th>#</th>
+						<th>Task ID</th>
+						<th>Task Name</th>
+						<th>Case ID</th>
+						<th>Status</th>
+						<th>Created</th>
+						</tr></thead>
+					<tbody>
+						<s:iterator id="workitem" value="%{items}">
+						<tr>
+						<td><input type="radio" name="selectedItem" value="${workitem.getID()}"></td>
+						<td><s:property value="#workitem.getTaskID()"/></td>
+						<td><s:property value="#workitem.getTaskName()"/></td>
+						<td><s:property value="#workitem.getCaseID()"/></td>
+						<td><s:property value="#workitem.getStatus()"/></td>
+						<td><s:property value="#workitem.getEnablementTime()"/></td>
+						</tr>
+						</s:iterator>
+					</tbody></table></div>
+				
+				<div class="btn-group" style="float: left;">
+					<button class="btn" type="submit"
+						onclick="offeredForm.action='acceptoffer.action';offeredForm.submit();">AcceptOffer</button>
+					<button class="btn" type="submit">Accept and Start</button>
+					<button class="btn" type="submit">Chain</button>
+			    </div>		
+			</fieldset></form></div>
+			
       </div>
-
-      <hr>
-      <footer>
-          <p>© Workflow Lab 2013</p>
-      </footer>
+		
+		<hr>
+		<footer>
+			<p>© Workflow Lab 2013</p>
+		</footer>
     </div> <!-- /container -->
 
     <!-- Le javascript

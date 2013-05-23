@@ -48,43 +48,56 @@
       </div>
     </div>
 
-    <div class="container-fluid">
-      <div class="row-fluid">
-        <div class="span3">
-          <div class="well sidebar-nav">
-            <ul class="nav nav-list">
-            	<li class="nav-header">个人工作列表</li>
-              	<li><a href="offered.action">Offered</a></li>
-              	<li><a href="allocated.action">Allocated</a></li>
-                <li class="active"><a href="started.action">Started</a></li>
-                <li><a href="suspended.action">Suspended</a></li>
-            </ul>
-          </div><!--/.well -->
-        </div>
-        
-        <div class="span9">
-        	<h3>Offered Work Items</h3>
-       		<div style="height:350px;"><table class="table table-hover">
-        		<thead>
-					<tr>
-					<th>Task ID</th>
-					<th>Task Name</th>
-					<th>Case ID</th>
-					<th>Status</th>
-					<th>Created</th>
-					</tr></thead>
-				<tbody>
-					<s:iterator id="workitem" value="%{items}">
-					<tr>
-					<td><s:property value="#workitem.getTaskID()"/></td>
-					<td><s:property value="#workitem.getTaskName()"/></td>
-					<td><s:property value="#workitem.getCaseID()"/></td>
-					<td><s:property value="#workitem.getStatus()"/></td>
-					<td><s:property value="#workitem.getEnablementTime()"/></td>
-					</tr>
-					</s:iterator></tbody></table>
-			</div>
-        </div>
+	<div class="container-fluid">
+    	<div class="row-fluid">
+        	<div class="span3">
+        		<div class="well sidebar-nav">
+	            <ul class="nav nav-list">
+	            	<li class="nav-header">个人工作列表</li>
+	              	<li><a href="offered.action">Offered</a></li>
+	              	<li><a href="allocated.action">Allocated</a></li>
+	                <li class="active"><a href="started.action">Started</a></li>
+	                <li><a href="suspended.action">Suspended</a></li>
+	            </ul>
+	            </div><!--/.well -->
+        	</div>
+        	
+        	<div class="span9">
+			<form name="startedForm" action="" method="post"><fieldset><legend>Started Work Items</legend>
+       			<div style="height:350px;"><table class="table table-hover">
+        			<thead>
+						<tr>
+						<th>#</th>
+						<th>Task ID</th>
+						<th>Task Name</th>
+						<th>Case ID</th>
+						<th>Status</th>
+						<th>Created</th>
+						</tr></thead>
+					<tbody>
+						<s:iterator id="workitem" value="%{items}">
+						<tr>
+						<td><input type="radio" name="selectedItem" value="${workitem.getID()}"></td>
+						<td><s:property value="#workitem.getTaskID()"/></td>
+						<td><s:property value="#workitem.getTaskName()"/></td>
+						<td><s:property value="#workitem.getCaseID()"/></td>
+						<td><s:property value="#workitem.getStatus()"/></td>
+						<td><s:property value="#workitem.getEnablementTime()"/></td>
+						</tr>
+						</s:iterator>
+					</tbody></table></div>
+					
+				<div class="btn-group" style="float: left;">
+					<button class="btn" type="submit"
+						onclick="">View/Edit</button>
+					<button class="btn" type="submit">Suspend</button>
+					<button class="btn" type="submit">Reallocate s/l</button>
+					<button class="btn" type="submit">Reallocate s/f</button>
+					<button class="btn" type="submit">New Instance</button>
+					<button class="btn" type="submit">Complete</button>
+			    </div>
+			</fieldset></form></div>
+			
       </div>
 
       <hr>

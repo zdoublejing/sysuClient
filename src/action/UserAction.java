@@ -1,6 +1,6 @@
 package action;
 
-import service.UserService;
+import service.WorkQueueService;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -18,41 +18,41 @@ public class UserAction extends ActionSupport{
 	private String userid;
 	private String passwd;
 	private Set<WorkItemRecord> items;
-	private UserService userService = new UserService();
+	private WorkQueueService workQueueService = new WorkQueueService();
 	
-	Map<String, Object> session = ActionContext.getContext().getSession();
+	private Map<String, Object> session = ActionContext.getContext().getSession();
 	
 	public String signin() throws IOException, ResourceGatewayException{		
 		if( userid.trim().equals("admin") && passwd.equals("YAWL")) return "admin";
-		else if( userService.login(userid.trim(), passwd))	return "user";		
+		else if( workQueueService.login(userid.trim(), passwd))	return "user";		
 		else return "error"; 
 
 	}
 	
 	public String offered() throws IOException, ResourceGatewayException {		
-		items = userService.getWorkQueue((String) session.get("userid"), "offered");
+		items = workQueueService.getWorkQueue((String) session.get("userid"), "offered");
 		return "success";
 		
 	}
 	
 	public String allocated() throws IOException, ResourceGatewayException {		
-		items = userService.getWorkQueue((String) session.get("userid"), "allocated");
+		items = workQueueService.getWorkQueue((String) session.get("userid"), "allocated");
 		return "success";
 		
 	}
 	
 	public String started() throws IOException, ResourceGatewayException {		
-		items = userService.getWorkQueue((String) session.get("userid"), "started");
+		items = workQueueService.getWorkQueue((String) session.get("userid"), "started");
 		return "success";
 		
 	}
 	
 	public String suspended() throws IOException, ResourceGatewayException {		
-		items = userService.getWorkQueue((String) session.get("userid"), "suspended");
+		items = workQueueService.getWorkQueue((String) session.get("userid"), "suspended");
 		return "success";
 		
 	}
-	
+
 	/*************************************************/
 
 	public String getUserid() {

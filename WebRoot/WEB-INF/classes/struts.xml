@@ -13,25 +13,33 @@
 
         <action name="signin" class="action.UserAction" method="signin">
             <result name="admin" type="redirectAction">participant/all.action</result>
-            <result name="user" type="redirectAction">user/offered.action</result>
+            <result name="user" type="redirectAction">workqueue/offered.action</result>
         </action>
         
         <!-- Add actions here -->
 
     </package>
     
-    <package name="user" namespace="/user" extends="struts-default">
+    <package name="workqueue" namespace="/workqueue" extends="struts-default">
     	<action name="offered" class="action.UserAction" method="offered">
-    		<result name="success">/user/offered.jsp</result>
+    		<result name="success">/workqueue/offered.jsp</result>
     	</action>
     	<action name="allocated" class="action.UserAction" method="allocated">
-    		<result name="success">/user/allocated.jsp</result>
+    		<result name="success">/workqueue/allocated.jsp</result>
     	</action>
     	<action name="started" class="action.UserAction" method="started">
-    		<result name="success">/user/started.jsp</result>
+    		<result name="success">/workqueue/started.jsp</result>
     	</action>
     	<action name="suspended" class="action.UserAction" method="suspended">
-    		<result name="success">/user/suspended.jsp</result>
+    		<result name="success">/workqueue/suspended.jsp</result>
+    	</action>
+    	
+    	<action name="acceptoffer" class="action.WorkItemAction" method="acceptoffer">
+    		<result name="success">/workqueue/offered.jsp</result>
+    	</action>
+    	
+    	<action name="start" class="action.WorkItemAction" method="start">
+    		<result name="success">/workqueue/allocated.jsp</result>
     	</action>
     </package>
     

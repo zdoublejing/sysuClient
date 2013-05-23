@@ -10,7 +10,7 @@ import org.yawlfoundation.yawl.resourcing.rsInterface.ResourceGatewayException;
 import org.yawlfoundation.yawl.resourcing.rsInterface.WorkQueueGatewayClientAdapter;
 import com.opensymphony.xwork2.ActionContext;
 
-public class UserService{
+public class WorkQueueService{
 	String _handle;
 	String _userName = "sysu";
 	String _password = "YAWL";
@@ -26,6 +26,21 @@ public class UserService{
         }
         else return true ;
     }
+    
+	public Participant getParticipantFromUserid(String userid) throws IOException, ResourceGatewayException {
+		if(this.connected()) {
+			return wqAdapter.getParticipantFromUserID(userid, _handle);
+		}
+		return null;
+	}
+
+	public boolean isAdmin(String userid) throws IOException, ResourceGatewayException {
+		Participant pa = wqAdapter.getParticipantFromUserID(userid, _handle);
+		
+		if(pa.isAdministrator()) return true;
+		else return false;
+		
+	}
 	
 	public boolean login(String userid, String password) throws IOException, ResourceGatewayException {
 		String userhandle = wqAdapter.userlogin(userid, password);
@@ -48,19 +63,11 @@ public class UserService{
 		session.remove("userhandle");
 		session.remove("userid");
 	}
-
-	public boolean isAdmin(String userid) throws IOException, ResourceGatewayException {
-		Participant pa = wqAdapter.getParticipantFromUserID(userid, _handle);
-		
-		if(pa.isAdministrator()) return true;
-		else return false;
-		
-	}
 	
 	public Set<WorkItemRecord> getWorkQueue(String userid, String queueType) throws IOException, ResourceGatewayException {
 		
 		if(this.connected()) {
-			Participant pa = wqAdapter.getParticipantFromUserID(userid, _handle);
+			Participant pa = this.getParticipantFromUserid(userid);
 			
 			if(queueType.equals("offered"))
 				return wqAdapter.getQueuedWorkItems(pa.getID(), 0, _handle);
@@ -88,6 +95,30 @@ public class UserService{
 		}
 		
 		return null;
+	}
+	
+	public void acceptoffer(String userid, String selectedItem) throws IOException, ResourceGatewayException {
+		if(this.connected()) {
+			
+			Participant pa = this.getParticipantFromUserid(userid);
+			
+			System.out.println("selectedItem:"+selectedItem);
+			
+			wqAdapter.acceptOffer(pa.getID(), selectedItem, _handle);
+		}
+		
+	}
+
+	public void start(String userid, String selectedItem) throws IOException, ResourceGatewayException {
+		if(this.connected()) {
+			
+			Participant pa = this.getParticipantFromUserid(userid);
+			
+			System.out.println("selectedItem:"+selectedItem);
+			
+			wqAdapter.startItem(pa.getID(), selectedItem, _handle);
+		}
+		
 	}
 
 }
